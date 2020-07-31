@@ -1,0 +1,18 @@
+[
+  {
+    "picture": "/img/houses/1.jpg",
+    "type": "Departamento entero",
+    "town": "Tailandia",
+    "title": "BRIGHT WAY Studio",
+    "rating": 4.67,
+    "reviewsCount": 198
+  },
+  {
+    "picture": "/img/houses/2.jpg",
+    "type": "Casa de campo entera",
+    "town": "México",
+    "title": "Casa de Campo “Hnos. Huertas”",
+    "rating": 4.77,
+    "reviewsCount": 246
+  }
+]
