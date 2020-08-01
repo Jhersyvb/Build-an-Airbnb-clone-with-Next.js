@@ -1,6 +1,15 @@
+import App from 'next/app'
+import { StoreProvider } from 'easy-peasy'
+import store from '../store'
 import 'react-day-picker/lib/style.css'
 
-// This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default class extends App {
+  render () {
+    const { Component, pageProps } = this.props
+    return (
+      <StoreProvider store={store}>
+        <Component {...pageProps} />
+      </StoreProvider>
+    )
+  }
 }

@@ -1,61 +1,71 @@
 import Link from 'next/link'
+import { useStoreActions } from 'easy-peasy'
 
-const Header = () => (
-  <div className='nav-container'>
-    <Link href='/'>
-      <a>
-        <img src='/img/logo.png' alt='Logo' />
-      </a>
-    </Link>
+const Header = () => {
+  const setShowLoginModal = useStoreActions(
+    actions => actions.modals.setShowLoginModal
+  )
+  const setShowRegistrationModal = useStoreActions(
+    actions => actions.modals.setShowRegistrationModal
+  )
 
-    <nav>
-      <ul>
-        <li>
-          <Link href='/register'>
-            <a>Sign up</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/login'>
-            <a>Log in</a>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+  return (
+    <div className='nav-container'>
+      <Link href='/'>
+        <a>
+          <img src='/img/logo.png' alt='Logo' />
+        </a>
+      </Link>
 
-    <style jsx>{`
-      .nav-container {
-        border-bottom: 1px solid #ddd;
-        height: 50px;
-      }
+      <nav>
+        <ul>
+          <li>
+            <a href='#' onClick={() => setShowRegistrationModal()}>
+              Sign up
+          </a>
+          </li>
+          <li>
+            <a href='#' onClick={() => setShowLoginModal()}>
+              Log in
+          </a>
+          </li>
+        </ul>
+      </nav>
 
-      img {
-        float: left;
-      }
+      <style jsx>{`
+        .nav-container {
+          border-bottom: 1px solid #ddd;
+          height: 50px;
+        }
 
-      ul {
-        float: right;
-        margin: 0;
-        padding: 0;
-      }
+        img {
+          float: left;
+        }
 
-      li {
-        display: block;
-        float: left;
-      }
+        ul {
+          float: right;
+          margin: 0;
+          padding: 0;
+        }
 
-      a {
-        color: #333;
-        display: block;
-        margin-right: 15px;
-        text-decoration: none;
-      }
+        li {
+          display: block;
+          float: left;
+        }
 
-      nav a {
-        padding: 1em 0.5em;
-      }
-    `}</style>
-  </div>
-)
+        a {
+          color: #333;
+          display: block;
+          margin-right: 15px;
+          text-decoration: none;
+        }
+
+        nav a {
+          padding: 1em 0.5em;
+        }
+      `}</style>
+    </div>
+  )
+}
 
 export default Header
