@@ -6,6 +6,7 @@
     "type": "Departamento entero",
     "town": "Tailandia",
     "title": "BRIGHT WAY Studio",
+    "price": "50.00",
     "rating": 4.67,
     "reviewsCount": 198,
     "superhost": true,
@@ -36,6 +37,7 @@
     "type": "Casa de campo entera",
     "town": "México",
     "title": "Casa de Campo “Hnos. Huertas”",
+    "price": "50.00",
     "rating": 4.77,
     "reviewsCount": 246
   }
