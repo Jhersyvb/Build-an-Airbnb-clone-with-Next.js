@@ -21,22 +21,23 @@ const Header = () => {
       </Link>
 
       <nav>
-        {user ? (
-          <>
-            <li className='username'>{user}</li>
-            <li>
-              <a
-                href='#'
-                onClick={async () => {
-                  await axios.post('/api/auth/logout')
-                  setUser(null)
-                }}
-              >
-                Log out
-              </a>
-            </li>
-          </>
-        ) : (
+        <ul>
+          {user ? (
+            <>
+              <li className='username'>{user}</li>
+              <li>
+                <a
+                  href='#'
+                  onClick={async () => {
+                    await axios.post('/api/auth/logout')
+                    setUser(null)
+                  }}
+                >
+                  Log out
+                </a>
+              </li>
+            </>
+          ) : (
             <>
               <li>
                 <a href='#' onClick={() => setShowRegistrationModal()}>
@@ -50,6 +51,7 @@ const Header = () => {
               </li>
             </>
           )}
+        </ul>
       </nav>
 
       <style jsx>{`

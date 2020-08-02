@@ -8,6 +8,7 @@ const handle = nextApp.getRequestHandler()
 
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const bodyParser = require('body-parser')
 
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
@@ -21,31 +22,36 @@ const sessionStore = new SequelizeStore({
 
 sessionStore.sync()
 
-passport.use(new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-}, async function (email, password, done) {
-  if (!email || !password) {
-    done('Email and password required', null)
-    return
-  }
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password'
+    },
+    async function (email, password, done) {
+      if (!email || !password) {
+        done('Email and password required', null)
+        return
+      }
 
-  const user = await User.findOne({ where: { email: email } })
+      const user = await User.findOne({ where: { email: email } })
 
-  if (!user) {
-    done('User not found', null)
-    return
-  }
+      if (!user) {
+        done('User not found', null)
+        return
+      }
 
-  const valid = await user.isPasswordValid(password)
+      const valid = await user.isPasswordValid(password)
 
-  if (!valid) {
-    done('Email and password do not match', null)
-    return
-  }
+      if (!valid) {
+        done('Email and password do not match', null)
+        return
+      }
 
-  done(null, user)
-}))
+      done(null, user)
+    }
+  )
+)
 
 passport.serializeUser((user, done) => {
   done(null, user.email)
@@ -60,6 +66,7 @@ passport.deserializeUser((email, done) => {
 nextApp.prepare().then(() => {
   const server = express()
 
+  server.use(bodyParser.json())
   server.use(
     session({
       secret: 'mwsq1q3oy14gcecr8e', //enter a random string here
