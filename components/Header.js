@@ -1,5 +1,5 @@
+import axios from 'axios'
 import Link from 'next/link'
-import { useStoreActions } from 'easy-peasy'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
     actions => actions.modals.setShowRegistrationModal
   )
   const user = useStoreState(state => state.user.user)
-
+  const setUser = useStoreActions(actions => actions.user.setUser)
 
   return (
     <div className='nav-container'>
@@ -22,18 +22,31 @@ const Header = () => {
 
       <nav>
         {user ? (
-          <li className='username'>{user}</li>
+          <>
+            <li className='username'>{user}</li>
+            <li>
+              <a
+                href='#'
+                onClick={async () => {
+                  await axios.post('/api/auth/logout')
+                  setUser(null)
+                }}
+              >
+                Log out
+              </a>
+            </li>
+          </>
         ) : (
             <>
               <li>
                 <a href='#' onClick={() => setShowRegistrationModal()}>
                   Sign up
-        </a>
+                </a>
               </li>
               <li>
                 <a href='#' onClick={() => setShowLoginModal()}>
                   Log in
-        </a>
+                </a>
               </li>
             </>
           )}

@@ -109,6 +109,12 @@ nextApp.prepare().then(() => {
     }
   })
 
+  server.post('/api/auth/logout', (req, res) => {
+    req.logout()
+    req.session.destroy()
+    return res.end(JSON.stringify({ status: 'success', message: 'Logged out' }))
+  })
+
   server.all('*', (req, res) => {
     return handle(req, res)
   })
