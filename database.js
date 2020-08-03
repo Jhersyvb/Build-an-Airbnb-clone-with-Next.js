@@ -1,8 +1,14 @@
-const Database = {
-  user: 'jhersy',
-  password: 'postgres',
-  host: 'localhost',
-  database: 'nextbnb'
-}
+const user = 'jhersy'
+const password = 'postgres'
+const host = 'localhost'
+const database = 'nextbnb'
 
-module.exports = Database
+const Sequelize = require('sequelize')
+
+const sequelize = new Sequelize(database, user, password, {
+  host,
+  dialect: 'postgres',
+  logging: false
+})
+
+module.exports = sequelize
