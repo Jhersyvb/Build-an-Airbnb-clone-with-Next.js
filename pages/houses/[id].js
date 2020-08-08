@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import houses from '../houses.json'
 import { useState } from 'react'
 import Layout from '../../components/Layout'
 import DateRangePicker from '../../components/DateRangePicker'
 import { useStoreActions } from 'easy-peasy'
+import fetch from 'isomorphic-unfetch'
 
 const calcNumberOfNightsBetweenDates = (startDate, endDate) => {
   const start = new Date(startDate) //clone
@@ -39,9 +39,22 @@ const House = props => {
               {props.house.type} - {props.house.town}
             </p>
             <p>{props.house.title}</p>
-            <p>
-              {props.house.rating} ({props.house.reviewsCount})
-          </p>
+            {props.house.reviewsCount ? (
+              <div className='reviews'>
+                <h3>{props.house.reviewsCount} Reviews</h3>
+
+                {props.house.reviews.map((review, index) => {
+                  return (
+                    <div key={index}>
+                      <p>{new Date(review.createdAt).toDateString()}</p>
+                      <p>{review.comment}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <></>
+            )}
           </article>
           <aside>
             <h2>Add date for prices</h2>
@@ -94,8 +107,11 @@ const House = props => {
 House.getInitialProps = async ({ query }) => {
   const { id } = query
 
+  const res = await fetch(`http://localhost:3000/api/houses/${id}`)
+  const house = await res.json()
+
   return {
-    house: houses.filter(house => house.id == id)[0]
+    house
   }
 }
 
