@@ -10,12 +10,15 @@ export default props => {
 
   return (
     <>
-      <h2>Sign up</h2>
+      <h2>Log in</h2>
       <div>
         <form
           onSubmit={async event => {
             try {
-              const response = await axios.post('/api/auth/login', { email, password })
+              const response = await axios.post('/api/auth/login', {
+                email,
+                password
+              })
               if (response.data.status === 'error') {
                 alert(response.data.message)
                 return
